@@ -1,5 +1,5 @@
-class Population(size: Int) {
-    private val individuals = Array(size) { Individual(inputData.size) }
+class Population(size: Int, inputData: InputData) {
+    private val individuals = Array(size) { Individual(inputData) }
 
     val bestIndividual = individuals.minBy { it.cost } ?: throw NoSuchElementException("Empty population")
 }

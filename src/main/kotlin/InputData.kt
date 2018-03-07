@@ -1,7 +1,5 @@
 import java.io.File
 
-val inputData = InputData.readFrom("src/main/resources/had12.dat")
-
 typealias Matrix = List<List<Int>>
 
 class InputData(val size: Int, val flowMatrix: Matrix, val distanceMatrix: Matrix) {
