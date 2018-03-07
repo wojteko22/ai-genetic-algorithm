@@ -1,11 +1,11 @@
-class Individual(
+data class Individual(
     private val inputData: InputData,
     private val genes: List<Int> = List(inputData.size) { it + 1 }.shuffled()
 ) {
 
     private val size = inputData.size
 
-    val cost = run {
+    val cost by lazy {
         var result = 0
         for (rowIndex in 0 until size) {
             for (columnIndex in 0 until size) {
