@@ -1,5 +1,8 @@
-class Individual(size: Int) {
-    private val genes = List(size) { it + 1 }.shuffled()
+class Individual(private val genes: List<Int>) {
+
+    private val size = genes.size
+
+    constructor(size: Int): this(List(size) { it + 1 }.shuffled())
 
     val cost = run {
         var result = 0
@@ -10,5 +13,17 @@ class Individual(size: Int) {
             }
         }
         result
+    }
+
+    fun outcross(partner: Individual): Individual {
+        val genesOfThis = genes.subList(0, size / 2)
+        val genesOfPartner = partner.genes - genesOfThis
+        val genesOfChild = genesOfThis + genesOfPartner
+        println(genesOfChild)
+        return Individual(genesOfChild)
+    }
+
+    override fun toString(): String {
+        return genes.toString()
     }
 }
