@@ -7,8 +7,8 @@ class Individual(size: Int) {
 
     val cost = run {
         var result = 0
-        for (rowIndex in 0..size) {
-            for (columnIndex in 0..size) {
+        for (rowIndex in 0 until size) {
+            for (columnIndex in 0 until size) {
                 result += inputData.flowMatrix[rowIndex][columnIndex] *
                         inputData.distanceMatrix[genes[rowIndex]][genes[columnIndex]]
             }
