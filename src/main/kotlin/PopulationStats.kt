@@ -1,1 +1,1 @@
-data class PopulationStats(val bestCost: Int, val averageCost: Double, val worstCost: Int)
+data class PopulationStats(val bestCost: Int, val averageCost: Int, val worstCost: Int)

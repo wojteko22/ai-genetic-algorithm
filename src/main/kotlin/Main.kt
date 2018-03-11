@@ -1,9 +1,14 @@
 fun main(args: Array<String>) {
     val populationSize = 100
-    val inputData = InputData.readFrom("src/main/resources/had12.dat")
-    val population = Population(populationSize, inputData)
-    val familyStats = population.makeFamily(10, 5)
-    println(familyStats)
-}
+    val numberOfGenerations = 10
+    val tournamentSize = 10
 
-class AvgFamilyStats(val familiesStats: Set<FamilyStats>)
+    val inputData = InputData.readFrom("src/main/resources/had12.dat")
+
+    val familiesStats = List(10) {
+        val population = Population(populationSize, inputData)
+        population.makeFamily(numberOfGenerations, tournamentSize)
+    }
+    val avgFamilyStats = AvgFamilyStats(familiesStats)
+    avgFamilyStats.print()
+}

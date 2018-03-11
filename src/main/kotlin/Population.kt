@@ -1,5 +1,6 @@
 import java.util.*
 import kotlin.NoSuchElementException
+import kotlin.math.roundToInt
 
 class Population(private val individuals: List<Individual>) {
 
@@ -8,7 +9,7 @@ class Population(private val individuals: List<Individual>) {
 
     private val bestCost = costs.min() ?: handleEmptyPopulation()
     private val worstCost = costs.max() ?: handleEmptyPopulation()
-    private val averageCost = costs.average()
+    private val averageCost = costs.average().roundToInt()
 
     private val stats = PopulationStats(bestCost, averageCost, worstCost)
 
