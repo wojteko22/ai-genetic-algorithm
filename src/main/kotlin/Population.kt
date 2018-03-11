@@ -4,12 +4,17 @@ import kotlin.NoSuchElementException
 class Population(private val individuals: List<Individual>) {
 
     private val size = individuals.size
+    private val costs = individuals.map { it.cost }
+
+    val bestCost = costs.min() ?: handleEmptyPopulation()
+    val worstCost = costs.max() ?: handleEmptyPopulation()
+    val averageCost = costs.average()
 
     constructor(size: Int, inputData: InputData) : this(List(size) { Individual(inputData) })
 
-    val bestCost = individuals
-        .map { it.cost }
-        .min() ?: throw NoSuchElementException("Empty population")
+    private fun handleEmptyPopulation(): Nothing {
+        throw NoSuchElementException("Empty population")
+    }
 
     fun breed(tournamentSize: Int): Population {
         val children = (1..size).map {
