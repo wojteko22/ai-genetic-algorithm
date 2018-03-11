@@ -14,10 +14,14 @@ class AvgFamilyStats(params: AlgorithmParams, facilitiesData: FacilitiesData) {
         )
     }
 
+    private val paramsInfo = with(params) {
+        "pop_size=$populationSize,gen=$numberOfGenerations,Px=$crossingOdds,Pm=$mutationOdds,Tour=$tournamentSize"
+    }
+
     private val numberOfGenerations = params.numberOfGenerations
 
-    fun writeToCsv() {
-        val fileWriter = FileWriter("stats.csv")
+    fun writeToCsv(dataNumber: Int) {
+        val fileWriter = FileWriter("had${dataNumber}_$paramsInfo.csv")
         fileWriter.use { it.write(csv) }
     }
 
