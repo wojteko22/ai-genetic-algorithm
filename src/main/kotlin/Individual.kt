@@ -16,7 +16,7 @@ data class Individual(
         result
     }
 
-    fun outcross(partner: Individual): Individual {
+    fun crossWith(partner: Individual): Individual {
         val genesOfThis = genes.subList(0, size / 2)
         val genesOfPartner = partner.genes - genesOfThis
         val genesOfChild = genesOfThis + genesOfPartner

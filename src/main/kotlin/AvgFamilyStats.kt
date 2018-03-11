@@ -6,7 +6,7 @@ class AvgFamilyStats(params: AlgorithmParams, facilitiesData: FacilitiesData) {
 
     private val familiesStats = List(10) {
         val population = Population(params.populationSize, facilitiesData)
-        population.makeFamily(params.numberOfGenerations, params.tournamentSize)
+        population.makeFamily(params.numberOfGenerations, params.tournamentSize, params.crossingOdds)
     }
 
     private val numberOfGenerations = params.numberOfGenerations

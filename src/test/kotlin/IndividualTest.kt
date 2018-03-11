@@ -20,7 +20,7 @@ internal class IndividualTest {
 
         val individual1 = Individual(inputData, genes1)
         val individual2 = Individual(inputData, genes2)
-        val child = individual1.outcross(individual2)
+        val child = individual1.crossWith(individual2)
         val expectedChild = Individual(inputData, expectedGenes)
 
         assertThat(child).isEqualTo(expectedChild)
