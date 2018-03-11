@@ -19,19 +19,25 @@ class Population(private val individuals: List<Individual>) {
         throw NoSuchElementException("Empty population")
     }
 
-    fun makeFamily(numberOfGenerations: Int, tournamentSize: Int, crossingOdds: Float): FamilyStats {
+    fun makeFamily(
+        numberOfGenerations: Int,
+        tournamentSize: Int,
+        crossingOdds: Float,
+        mutationOdds: Float
+    ): FamilyStats {
         var currentPopulation = this
         return List(numberOfGenerations) {
             val stats = currentPopulation.stats
-            currentPopulation = currentPopulation.breed(tournamentSize, crossingOdds)
+            currentPopulation = currentPopulation.breed(tournamentSize, crossingOdds, mutationOdds)
             stats
         }
     }
 
-    private fun breed(tournamentSize: Int, crossingOdds: Float): Population {
+    private fun breed(tournamentSize: Int, crossingOdds: Float, mutationOdds: Float): Population {
         val children = (1..size).map {
             val selected = selectInTournament(tournamentSize)
-            giveDescendantOf(selected, crossingOdds)
+            val originalDescendant = giveDescendantOf(selected, crossingOdds)
+            originalDescendant.mutate(mutationOdds)
         }
         return Population(children)
     }
@@ -43,7 +49,7 @@ class Population(private val individuals: List<Individual>) {
             individual
         }
 
-    private fun shouldCross(crossingOdds: Float) = Random().nextFloat() < crossingOdds
+    private fun shouldCross(crossingOdds: Float) = RandomDecisionMaker.shouldTakeAction(crossingOdds)
 
     private fun selectInTournament(tournamentSize: Int): Individual {
         val selectedGroup = individuals.shuffled().take(tournamentSize)
