@@ -2,10 +2,16 @@ import java.io.FileWriter
 
 private const val header = "nr,najlepszy,średni,najgorszy\n"
 
-class AvgFamilyStats(private val familiesStats: Collection<FamilyStats>) {
-    private val numberOfGenerations = familiesStats.first().size
+class AvgFamilyStats(params: AlgorithmParams, facilitiesData: FacilitiesData) {
 
-    fun print() {
+    private val familiesStats = List(10) {
+        val population = Population(params.populationSize, facilitiesData)
+        population.makeFamily(params.numberOfGenerations, params.tournamentSize)
+    }
+
+    private val numberOfGenerations = params.numberOfGenerations
+
+    fun writeToCsv() {
         val fileWriter = FileWriter("stats.csv")
         fileWriter.use { it.write(csv) }
     }
