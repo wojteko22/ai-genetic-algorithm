@@ -5,7 +5,7 @@ internal class IndividualTest {
 
     @Test
     fun getCost() {
-        val inputData = InputData.readFrom("src/main/resources/had12.dat")
+        val inputData = FacilitiesData.readFrom("src/main/resources/had12.dat")
         val genes = listOf(3, 10, 11, 2, 12, 5, 6, 7, 8, 1, 4, 9)
         val individual = Individual(inputData, genes)
         assertThat(individual.cost).isEqualTo(1652)
@@ -16,7 +16,7 @@ internal class IndividualTest {
         val genes1 = listOf(1, 2, 3, 4)
         val genes2 = listOf(4, 1, 3, 2)
         val expectedGenes = listOf(1, 2, 4, 3)
-        val inputData = InputData(4, emptyList(), emptyList())
+        val inputData = FacilitiesData(4, emptyList(), emptyList())
 
         val individual1 = Individual(inputData, genes1)
         val individual2 = Individual(inputData, genes2)

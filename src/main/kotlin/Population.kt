@@ -13,7 +13,7 @@ class Population(private val individuals: List<Individual>) {
 
     private val stats = PopulationStats(bestCost, averageCost, worstCost)
 
-    constructor(size: Int, inputData: InputData) : this(List(size) { Individual(inputData) })
+    constructor(size: Int, facilitiesData: FacilitiesData) : this(List(size) { Individual(facilitiesData) })
 
     private fun handleEmptyPopulation(): Nothing {
         throw NoSuchElementException("Empty population")

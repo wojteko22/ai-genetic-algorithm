@@ -1,16 +1,16 @@
 data class Individual(
-    private val inputData: InputData,
-    private val genes: List<Int> = List(inputData.size) { it + 1 }.shuffled()
+    private val facilitiesData: FacilitiesData,
+    private val genes: List<Int> = List(facilitiesData.size) { it + 1 }.shuffled()
 ) {
 
-    private val size = inputData.size
+    private val size = facilitiesData.size
 
     val cost by lazy {
         var result = 0
         for (rowIndex in 0 until size) {
             for (columnIndex in 0 until size) {
-                result += inputData.flowMatrix[rowIndex][columnIndex] *
-                        inputData.distanceMatrix[genes[rowIndex] - 1][genes[columnIndex] - 1]
+                result += facilitiesData.flowMatrix[rowIndex][columnIndex] *
+                        facilitiesData.distanceMatrix[genes[rowIndex] - 1][genes[columnIndex] - 1]
             }
         }
         result
@@ -20,7 +20,7 @@ data class Individual(
         val genesOfThis = genes.subList(0, size / 2)
         val genesOfPartner = partner.genes - genesOfThis
         val genesOfChild = genesOfThis + genesOfPartner
-        return Individual(inputData, genesOfChild)
+        return Individual(facilitiesData, genesOfChild)
     }
 
     override fun toString(): String {
