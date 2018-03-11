@@ -6,9 +6,11 @@ class Population(private val individuals: List<Individual>) {
     private val size = individuals.size
     private val costs = individuals.map { it.cost }
 
-    val bestCost = costs.min() ?: handleEmptyPopulation()
-    val worstCost = costs.max() ?: handleEmptyPopulation()
-    val averageCost = costs.average()
+    private val bestCost = costs.min() ?: handleEmptyPopulation()
+    private val worstCost = costs.max() ?: handleEmptyPopulation()
+    private val averageCost = costs.average()
+
+    private val stats = PopulationStats(bestCost, averageCost, worstCost)
 
     constructor(size: Int, inputData: InputData) : this(List(size) { Individual(inputData) })
 
@@ -16,7 +18,16 @@ class Population(private val individuals: List<Individual>) {
         throw NoSuchElementException("Empty population")
     }
 
-    fun breed(tournamentSize: Int): Population {
+    fun makeFamily(numberOfGenerations: Int, tournamentSize: Int): FamilyStats {
+        var currentPopulation = this
+        return List(numberOfGenerations) {
+            val stats = currentPopulation.stats
+            currentPopulation = currentPopulation.breed(tournamentSize)
+            stats
+        }
+    }
+
+    private fun breed(tournamentSize: Int): Population {
         val children = (1..size).map {
             val selected = selectInTournament(tournamentSize)
             selected.outcross(randomIndividual)

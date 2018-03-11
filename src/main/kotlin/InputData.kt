@@ -1,7 +1,5 @@
 import java.io.File
 
-typealias Matrix = List<List<Int>>
-
 class InputData(val size: Int, val flowMatrix: Matrix, val distanceMatrix: Matrix) {
 
     companion object {
