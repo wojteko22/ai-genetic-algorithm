@@ -2,7 +2,7 @@ import java.util.*
 
 data class Individual(
     private val facilitiesData: FacilitiesData,
-    private val genes: List<Int> = List(facilitiesData.size) { it + 1 }.shuffled()
+    private val genes: List<Location> = List(facilitiesData.size) { it + 1 }.shuffled()
 ) {
 
     private val size = facilitiesData.size
@@ -31,7 +31,7 @@ data class Individual(
         return Individual(facilitiesData, newGenes)
     }
 
-    private fun tryToMutate(genes: List<Int>, index: Int, mutationOdds: Float): List<Int> =
+    private fun tryToMutate(genes: List<Location>, index: Int, mutationOdds: Float): List<Location> =
         if (shouldMutate(mutationOdds))
             mutate(genes, index)
         else
@@ -39,7 +39,7 @@ data class Individual(
 
     private fun shouldMutate(mutationOdds: Float) = RandomDecisionMaker.shouldTakeAction(mutationOdds)
 
-    private fun mutate(genes: List<Int>, index: Int): MutableList<Int> {
+    private fun mutate(genes: List<Location>, index: Int): MutableList<Location> {
         val otherIndex = otherRandomIndex(index)
         return swap(genes, index, otherIndex)
     }
@@ -49,7 +49,7 @@ data class Individual(
         return otherIndexes.random
     }
 
-    private fun swap(genes: List<Int>, index: Int, otherIndex: Int): MutableList<Int> {
+    private fun swap(genes: List<Location>, index: Int, otherIndex: Int): MutableList<Location> {
         val newGenes = genes.toMutableList()
         val tmp = newGenes[index]
         newGenes[index] = newGenes[otherIndex]
