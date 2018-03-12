@@ -53,7 +53,7 @@ class Population(private val individuals: List<Individual>) {
 
     private fun selectInTournament(tournamentSize: Int): Individual {
         val selectedGroup = individuals.shuffled().take(tournamentSize)
-        return selectedGroup.maxBy { it.cost } ?: throw NoSuchElementException("No individuals in tournament")
+        return selectedGroup.minBy { it.cost } ?: throw NoSuchElementException("No individuals in tournament")
     }
 
     private val randomIndividual: Individual
