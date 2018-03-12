@@ -7,7 +7,8 @@ class Population(private val individuals: List<Individual>) {
     private val size = individuals.size
     private val costs = individuals.map { it.cost }
 
-    private val bestCost = costs.min() ?: handleEmptyPopulation()
+    private val bestIndividual = individuals.minBy { it.cost } ?: handleEmptyPopulation()
+    private val bestCost = bestIndividual.cost
     private val worstCost = costs.max() ?: handleEmptyPopulation()
     private val averageCost = costs.average().roundToInt()
 
@@ -34,11 +35,11 @@ class Population(private val individuals: List<Individual>) {
     }
 
     private fun breed(tournamentSize: Int, crossingOdds: Float, mutationOdds: Float): Population {
-        val children = (1..size).map {
+        val children = (1 until size).map {
             val selected = selectInTournament(tournamentSize)
             val originalDescendant = giveDescendantOf(selected, crossingOdds)
             originalDescendant.mutate(mutationOdds)
-        }
+        } + bestIndividual
         return Population(children)
     }
 
