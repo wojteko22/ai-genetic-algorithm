@@ -1,6 +1,6 @@
 import java.io.FileWriter
 
-private const val header = "nr,najlepszy,średni,najgorszy\n"
+private const val header = "nr,najlepszy,średni,najgorszy,σ_najlepszy,σ_średni,σ_najgorszy\n"
 
 class AvgFamilyStats(params: AlgorithmParams, facilitiesData: FacilitiesData) {
 
@@ -36,7 +36,7 @@ class AvgFamilyStats(params: AlgorithmParams, facilitiesData: FacilitiesData) {
 
     private fun printGenerationStats(index: Int): String {
         val peersStats: PeersStats = familiesStats.map { it[index] }
-        val average = peersStats.average()
-        return "${index + 1},${average.csv}\n"
+        val averageStats = peersStats.average()
+        return "${index + 1},$averageStats\n"
     }
 }

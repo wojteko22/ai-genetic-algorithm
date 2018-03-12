@@ -1,0 +1,1 @@
+class Mean(val mean: Cost, val sd: Cost)
