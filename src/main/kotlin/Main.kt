@@ -1,6 +1,13 @@
+import kotlin.system.measureTimeMillis
+
+typealias Millis = Long
+
 fun main(args: Array<String>) {
-    val params = AlgorithmParams()
-    FacilitiesData.all.forEach { prepareStats(params, it) }
+    val time: Millis = measureTimeMillis {
+        val params = AlgorithmParams()
+        FacilitiesData.all.forEach { prepareStats(params, it) }
+    }
+    println(time / 1000.0f)
 }
 
 fun prepareStats(params: AlgorithmParams, facilitiesData: FacilitiesData) {
