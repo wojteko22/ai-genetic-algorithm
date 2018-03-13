@@ -8,14 +8,15 @@ class chartview : View("Algorytm genetyczny") {
     override val root = GridPane()
 
     init {
-        val params = AlgorithmParams()
-        val facilitiesData = FacilitiesData.readFrom(12)
+        val numberOfFacilities = 20
+        val params = AlgorithmParams(mutationOdds = 0.2f)
 
+        val facilitiesData = FacilitiesData.readFrom(numberOfFacilities)
         val fullStats = StatsPicker(params, facilitiesData).fullStats
         val chartSize = ChartSize(facilitiesData.numberOfFacilities)
 
         linechart(
-            "$params\n${fullStats.averageSdsString}",
+            "liczba fabryk: $numberOfFacilities\n$params\n${fullStats.averageSdsString}",
             NumberAxis("nr pokolenia", 0.0, 100.0, 5.0),
             NumberAxis("koszt", chartSize.bottom, chartSize.top, 25.0)
         ) {
