@@ -9,7 +9,7 @@ class chartview : View("Algorytm genetyczny") {
 
     init {
         val numberOfFacilities = 20
-        val params = AlgorithmParams(mutationOdds = 0.2f)
+        val params = AlgorithmParams(tournamentSize = 100)
 
         val facilitiesData = FacilitiesData.readFrom(numberOfFacilities)
         val fullStats = StatsPicker(params, facilitiesData).fullStats
@@ -17,7 +17,11 @@ class chartview : View("Algorytm genetyczny") {
 
         linechart(
             "liczba fabryk: $numberOfFacilities\n$params\n${fullStats.averageSdsString}",
-            NumberAxis("nr pokolenia", 0.0, 100.0, 5.0),
+            NumberAxis(
+                "nr pokolenia",
+                0.0,
+                params.numberOfGenerations.toDouble(),
+                params.numberOfGenerations / 20.0),
             NumberAxis("koszt", chartSize.bottom, chartSize.top, 25.0)
         ) {
             createSymbols = false
