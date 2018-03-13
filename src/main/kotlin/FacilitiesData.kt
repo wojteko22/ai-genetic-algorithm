@@ -1,6 +1,6 @@
 import java.io.File
 
-class FacilitiesData(val size: Int, val flowMatrix: Matrix, val distanceMatrix: Matrix) {
+class FacilitiesData(val numberOfFacilities: Int, val flowMatrix: Matrix, val distanceMatrix: Matrix) {
 
     companion object {
         val all get() = arrayOf(12, 14, 16, 18, 20).map { readFrom(it) }

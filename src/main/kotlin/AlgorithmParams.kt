@@ -4,4 +4,8 @@ class AlgorithmParams(
     val tournamentSize: Int = 5,
     val crossingOdds: Float = 0.7f,
     val mutationOdds: Float = 0.01f
-)
+) {
+
+    override fun toString(): String =
+        "pop_size=$populationSize, Px=$crossingOdds, Pm=$mutationOdds, Tour=$tournamentSize"
+}

@@ -2,7 +2,7 @@ import java.io.FileWriter
 
 private const val header = "nr,najlepszy,średni,najgorszy,σ_najlepszy,σ_średni,σ_najgorszy\n"
 
-class AvgFamilyStats(params: AlgorithmParams, facilitiesData: FacilitiesData) {
+class StatsPicker(private val params: AlgorithmParams, private val facilitiesData: FacilitiesData) {
 
     private val familiesStats = List(10) {
         val population = Population(params.populationSize, facilitiesData)
@@ -14,16 +14,7 @@ class AvgFamilyStats(params: AlgorithmParams, facilitiesData: FacilitiesData) {
         )
     }
 
-    private val paramsInfo = with(params) {
-        "pop_size=$populationSize,gen=$numberOfGenerations,Px=$crossingOdds,Pm=$mutationOdds,Tour=$tournamentSize"
-    }
-
     private val numberOfGenerations = params.numberOfGenerations
-
-    fun writeToCsv(dataNumber: Int) {
-        val fileWriter = FileWriter("had${dataNumber}_$paramsInfo.csv")
-        fileWriter.use { it.write(csv) }
-    }
 
     private val csv: String
         get() {
@@ -34,9 +25,19 @@ class AvgFamilyStats(params: AlgorithmParams, facilitiesData: FacilitiesData) {
             return text
         }
 
+    val fullStats: List<AverageStats>
+        get() = (0 until numberOfGenerations).map { averageStats(it) }
+
+    fun writeToCsv() {
+        val numberOfFacilities = facilitiesData.numberOfFacilities
+        val fileWriter = FileWriter("had${numberOfFacilities}_$params.csv")
+        fileWriter.use { it.write(csv) }
+    }
+
     private fun printGenerationStats(index: Int): String {
-        val peersStats: PeersStats = familiesStats.map { it[index] }
-        val averageStats = peersStats.average()
+        val averageStats = averageStats(index)
         return "${index + 1},$averageStats\n"
     }
+
+    private fun averageStats(generationIndex: Int): AverageStats = familiesStats.map { it[generationIndex] }.average()
 }

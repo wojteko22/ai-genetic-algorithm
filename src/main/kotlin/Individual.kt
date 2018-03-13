@@ -2,10 +2,10 @@ import java.util.*
 
 data class Individual(
     private val facilitiesData: FacilitiesData,
-    private val genes: Genome = List(facilitiesData.size) { it + 1 }.shuffled()
+    private val genes: Genome = List(facilitiesData.numberOfFacilities) { it + 1 }.shuffled()
 ) {
 
-    private val size = facilitiesData.size
+    private val size = facilitiesData.numberOfFacilities
 
     val cost by lazy {
         var result = 0
