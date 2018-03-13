@@ -10,7 +10,7 @@ class ChartSize(numberOfFacilities: Int) {
     }
 
     val top = when(numberOfFacilities) {
-        12 -> 2100.0
+        12 -> 2050.0
         14 -> 2100.0
         16 -> 2100.0
         18 -> 2100.0

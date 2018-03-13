@@ -10,11 +10,12 @@ class chartview : View("Algorytm genetyczny") {
     init {
         val params = AlgorithmParams()
         val facilitiesData = FacilitiesData.readFrom(12)
+
         val fullStats = StatsPicker(params, facilitiesData).fullStats
         val chartSize = ChartSize(facilitiesData.numberOfFacilities)
 
         linechart(
-            params.toString(),
+            "$params\n${fullStats.averageSdsString}",
             NumberAxis("nr pokolenia", 0.0, 100.0, 5.0),
             NumberAxis("koszt", chartSize.bottom, chartSize.top, 25.0)
         ) {
@@ -30,4 +31,3 @@ class chartview : View("Algorytm genetyczny") {
         }
     }
 }
-
