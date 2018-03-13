@@ -36,12 +36,19 @@ class Population(private val individuals: List<Individual>) {
 
     private fun breed(tournamentSize: Int, crossingOdds: Float, mutationOdds: Float): Population {
         val children = (1 until size).map {
-            val selected = selectInTournament(tournamentSize)
+            val selected = select(tournamentSize)
             val originalDescendant = giveDescendantOf(selected, crossingOdds)
             originalDescendant.mutate(mutationOdds)
         } + bestIndividual
         return Population(children)
     }
+
+    private fun select(tournamentSize: Int): Individual =
+        if (tournamentSize == 0) {
+            selectedInRoulette
+        } else {
+            selectInTournament(tournamentSize)
+        }
 
     private fun giveDescendantOf(individual: Individual, crossingOdds: Float) =
         if (shouldCross(crossingOdds)) {
@@ -62,4 +69,23 @@ class Population(private val individuals: List<Individual>) {
             val nextInt = Random().nextInt(size)
             return individuals[nextInt]
         }
+
+    private val selectedInRoulette: Individual
+        get() {
+            val sum = costs.map { 1.0 / it }.sum()
+            val roulette = individuals.map { RouletteField(it, 1.0 / it.cost / sum) }
+            val drawnPoint = Random().nextDouble()
+            return getProperIndividual(roulette, drawnPoint)
+        }
+
+    private fun getProperIndividual(roulette: List<RouletteField>, drawnPoint: Double): Individual {
+        var sum = 0.0
+        for (field in roulette) {
+            sum += field.areaFraction
+            if (drawnPoint < sum) {
+                return field.individual
+            }
+        }
+        error("sum of fields is bigger than ruolette")
+    }
 }

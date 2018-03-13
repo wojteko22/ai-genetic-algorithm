@@ -7,5 +7,6 @@ class AlgorithmParams(
 ) {
 
     override fun toString(): String =
-        "pop_size=$populationSize, Px=$crossingOdds, Pm=$mutationOdds, Tour=$tournamentSize"
+        "pop_size=$populationSize, Px=$crossingOdds, Pm=$mutationOdds" +
+                if (tournamentSize != 0) ", Tour=$tournamentSize" else ""
 }

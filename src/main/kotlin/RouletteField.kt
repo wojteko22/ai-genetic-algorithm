@@ -1,0 +1,1 @@
+class RouletteField(val individual: Individual, val areaFraction: Double)

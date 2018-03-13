@@ -9,7 +9,7 @@ class chartview : View("Algorytm genetyczny") {
 
     init {
         val numberOfFacilities = 20
-        val params = AlgorithmParams(tournamentSize = 100)
+        val params = AlgorithmParams(tournamentSize = 0)
 
         val facilitiesData = FacilitiesData.readFrom(numberOfFacilities)
         val fullStats = StatsPicker(params, facilitiesData).fullStats
