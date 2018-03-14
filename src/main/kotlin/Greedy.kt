@@ -1,6 +1,8 @@
 fun main(args: Array<String>) {
-    val facilitiesData = FacilitiesData.readFrom(20)
-    GreedyQapFinder(facilitiesData).print()
+    FacilitiesData.all.forEach {
+        print("${it.numberOfFacilities} fabryk: ")
+        GreedyQapFinder(it).print()
+    }
 }
 
 class GreedyQapFinder(private val facilitiesData: FacilitiesData) {
@@ -10,8 +12,8 @@ class GreedyQapFinder(private val facilitiesData: FacilitiesData) {
 
     fun print() {
         val result = find()
-        println("result: $result")
-        println("cost: ${calculateCost(result)}")
+        val cost = calculateCost(result)
+        println("koszt $cost")
     }
 
     private fun find(): List<Location> {
