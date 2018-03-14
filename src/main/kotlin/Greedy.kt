@@ -1,8 +1,12 @@
+import kotlin.system.measureTimeMillis
+
 fun main(args: Array<String>) {
-    FacilitiesData.all.forEach {
-        print("${it.numberOfFacilities} fabryk: ")
-        GreedyQapFinder(it).print()
+    val data = FacilitiesData.readFrom(20)
+    print("${data.numberOfFacilities} fabryk: ")
+    val time = measureTimeMillis {
+        GreedyQapFinder(data).print()
     }
+    println("czas: $time")
 }
 
 class GreedyQapFinder(private val facilitiesData: FacilitiesData) {
