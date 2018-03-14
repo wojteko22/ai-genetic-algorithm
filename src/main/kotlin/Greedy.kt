@@ -1,8 +1,8 @@
 class GreedyQapFinder(dataNumber: Int) {
     private val facilitiesData = FacilitiesData.readFrom(dataNumber)
     private val numberOfFacilitiesData = facilitiesData.numberOfFacilities
-    private val allLocations = List(numberOfFacilitiesData) { it }
-    private val firstLocation = 0
+    private val allLocations = List(numberOfFacilitiesData) { it + 1 }
+    private val firstLocation = 1
 
     fun print() {
         val result = find()
@@ -28,9 +28,9 @@ class GreedyQapFinder(dataNumber: Int) {
         for (firstFacility in 0 until locations.size) {
             for (secondFacility in (firstFacility + 1) until locations.size) {
                 cost += facilitiesData.flowMatrix[firstFacility][secondFacility] *
-                        facilitiesData.distanceMatrix[locations[firstFacility]][locations[secondFacility]] +
+                        facilitiesData.distanceMatrix[locations[firstFacility] - 1][locations[secondFacility] - 1] +
                         facilitiesData.flowMatrix[secondFacility][firstFacility] *
-                        facilitiesData.distanceMatrix[locations[secondFacility]][locations[firstFacility]]
+                        facilitiesData.distanceMatrix[locations[secondFacility] - 1][locations[firstFacility] - 1]
             }
         }
         return cost
