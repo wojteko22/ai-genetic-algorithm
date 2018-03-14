@@ -14,23 +14,21 @@ class GreedyQapFinder(dataNumber: Int) {
     }
 
     private fun find(): List<Location> {
-        var currentResult: List<Location> = findTwoFirstLocations()
-        while (currentResult.size != numberOfFacilitiesData) {
-            currentResult = findBestNextLocation(currentResult)
-        }
-        return currentResult
+        val firstResult: List<Location> = findTwoFirstLocations()
+        return findBestLocation(firstResult)
     }
 
     private fun findTwoFirstLocations(): List<Location> = allPossiblePairs(allLocations)
         .map { it.toList() }
         .minBy { calculateCost(it) } ?: error("Not enough locations")
 
-
-    private fun allPossiblePairs(list: Iterable<Int>): List<Pair<Int, Int>> = list.flatMap { firstItem ->
-        (list - firstItem).map { secondItem ->
-            Pair(firstItem, secondItem)
+    private tailrec fun findBestLocation(currentResult: List<Location>): List<Location> =
+        if (currentResult.size == numberOfFacilitiesData) {
+            currentResult
+        } else {
+            val nextResult = findBestNextLocation(currentResult)
+            findBestLocation(nextResult)
         }
-    }
 
     private fun findBestNextLocation(currentResult: List<Location>): List<Location> {
         val availableLocations = allLocations - currentResult
@@ -44,4 +42,10 @@ class GreedyQapFinder(dataNumber: Int) {
             facilitiesData.flowMatrix[firstFacility][secondFacility] *
                     facilitiesData.distanceMatrix[locations[firstFacility] - 1][locations[secondFacility] - 1]
         }
+
+    private fun allPossiblePairs(elements: Iterable<Int>): List<Pair<Int, Int>> = elements.flatMap { firstItem ->
+        (elements - firstItem).map { secondItem ->
+            Pair(firstItem, secondItem)
+        }
+    }
 }
