@@ -1,9 +1,10 @@
 fun main(args: Array<String>) {
-    GreedyQapFinder(20).print()
+    val facilitiesData = FacilitiesData.readFrom(20)
+    GreedyQapFinder(facilitiesData).print()
 }
 
-class GreedyQapFinder(dataNumber: Int) {
-    private val facilitiesData = FacilitiesData.readFrom(dataNumber)
+class GreedyQapFinder(private val facilitiesData: FacilitiesData) {
+
     private val numberOfFacilitiesData = facilitiesData.numberOfFacilities
     private val allLocations = List(numberOfFacilitiesData) { it + 1 }
 
