@@ -2,7 +2,6 @@ class GreedyQapFinder(dataNumber: Int) {
     private val facilitiesData = FacilitiesData.readFrom(dataNumber)
     private val numberOfFacilitiesData = facilitiesData.numberOfFacilities
     private val allLocations = List(numberOfFacilitiesData) { it + 1 }
-    private val firstLocation = 1
 
     fun print() {
         val result = find()
@@ -10,14 +9,22 @@ class GreedyQapFinder(dataNumber: Int) {
         println("cost: ${calculateCost(result)}")
     }
 
-    fun find(): List<Location> {
-        var currentResult: List<Location> = listOf(firstLocation)
+    private fun find(): List<Location> {
+        var currentResult: List<Location> = findTwoFirstLocations()
         while (currentResult.size != numberOfFacilitiesData) {
             currentResult = findBestNextLocation(currentResult)
         }
         return currentResult
     }
 
+    private fun findTwoFirstLocations(): List<Location> {
+        val pairs = allLocations.flatMap { firstItem ->
+            (allLocations - firstItem).map { secondItem ->
+                listOf(firstItem, secondItem)
+            }
+        }
+        return pairs.minBy { calculateCost(it) } ?: error("Not enough locations")
+    }
     private fun findBestNextLocation(currentResult: List<Location>): List<Location> {
         val availableLocations = allLocations - currentResult
         return availableLocations.map { currentResult + it }.minBy { calculateCost(it) } ?: error("No available Location")
